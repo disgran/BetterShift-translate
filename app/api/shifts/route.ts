@@ -5,6 +5,7 @@ import { eq, and, gte, lte, or, isNull } from "drizzle-orm";
 import { getSessionUser } from "@/lib/auth/sessions";
 import { canViewCalendar, canEditCalendar } from "@/lib/auth/permissions";
 import { parseLocalDate } from "@/lib/date-utils";
+import { createHaEvent } from "@/lib/ha-sync";
 
 // GET shifts for a calendar (with optional date filter)
 export async function GET(request: Request) {
@@ -189,6 +190,8 @@ export async function POST(request: Request) {
         updatedAt: new Date(),
       })
       .returning();
+
+    void createHaEvent(shift);
 
     return NextResponse.json({ ...shift, calendar }, { status: 201 });
   } catch (error) {

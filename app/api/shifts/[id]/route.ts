@@ -4,6 +4,7 @@ import { calendars, shifts } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getSessionUser } from "@/lib/auth/sessions";
 import { canViewCalendar, canEditCalendar } from "@/lib/auth/permissions";
+import { deleteHaEvent, updateHaEvent } from "@/lib/ha-sync";
 
 // GET single shift
 export async function GET(
@@ -88,6 +89,8 @@ export async function DELETE(
 
     await db.delete(shifts).where(eq(shifts.id, id));
 
+    void deleteHaEvent(id);
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Failed to delete shift:", error);
@@ -148,6 +151,8 @@ export async function PUT(
       })
       .where(eq(shifts.id, id))
       .returning();
+
+    void updateHaEvent(updatedShift);
 
     return NextResponse.json(updatedShift);
   } catch (error) {
