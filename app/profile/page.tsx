@@ -578,6 +578,7 @@ export default function ProfilePage() {
                       <Input
                         id="currentPassword"
                         type="password"
+                        autoComplete="current-password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         disabled={isChangingPassword}
@@ -591,6 +592,7 @@ export default function ProfilePage() {
                       <Input
                         id="newPassword"
                         type="password"
+                        autoComplete="new-password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         disabled={isChangingPassword}
@@ -605,6 +607,7 @@ export default function ProfilePage() {
                       <Input
                         id="confirmNewPassword"
                         type="password"
+                        autoComplete="new-password"
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                         disabled={isChangingPassword}
@@ -816,6 +819,7 @@ export default function ProfilePage() {
                 <Input
                   id="deletePassword"
                   type="password"
+                  autoComplete="off"
                   value={deletePassword}
                   onChange={(e) => setDeletePassword(e.target.value)}
                   disabled={isDeleting}

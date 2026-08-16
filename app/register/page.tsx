@@ -135,6 +135,7 @@ export default function RegisterPage() {
   useEffect(() => {
     if (mounted && isAuthenticated) {
       router.replace("/");
+      router.refresh();
     }
   }, [mounted, isAuthenticated, router]);
 
@@ -210,6 +211,7 @@ export default function RegisterPage() {
                 <Input
                   id="password"
                   type="password"
+                  autoComplete="new-password"
                   placeholder={t("auth.passwordPlaceholder")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -230,6 +232,7 @@ export default function RegisterPage() {
                 <Input
                   id="confirmPassword"
                   type="password"
+                  autoComplete="new-password"
                   placeholder={t("common.labels.confirmPassword")}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

@@ -267,6 +267,7 @@ export async function proxy(request: NextRequest) {
     "/api/version", // Version info (always public)
     "/api/releases", // Changelog/releases (always public)
     "/api/health", // Health check endpoint
+    "/api/ics", // Public calendar ICS feed for token-based access
   ];
 
   // Check if the current route is public

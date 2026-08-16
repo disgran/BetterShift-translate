@@ -48,8 +48,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // Don't auto-redirect from login/register pages - let those pages handle their own navigation
-    // This allows users to stay on login after logout when guest access is enabled
+    // If the user is already authenticated and is on the public auth pages,
+    // always send them back to the intended destination (or home), even when
+    // those routes are normally public.
+    if (isPublicRoute && isAuthenticated) {
+      const search = new URLSearchParams(window.location.search);
+      const returnUrl = search.get("returnUrl") || "/";
+      router.replace(returnUrl);
+      return;
+    }
+
+    // Don't auto-redirect from login/register pages while the user is still unauthenticated
+    // so they can complete the login flow normally.
     if (isPublicRoute) {
       return;
     }

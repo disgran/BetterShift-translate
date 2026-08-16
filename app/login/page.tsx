@@ -60,8 +60,9 @@ export default function LoginPage() {
   // Redirect authenticated users to home or returnUrl
   useEffect(() => {
     if (mounted && isAuthenticated) {
-      const returnUrl = searchParams.get("returnUrl");
-      router.replace(returnUrl || "/");
+      const returnUrl = searchParams.get("returnUrl") || "/";
+      router.replace(returnUrl);
+      router.refresh();
     }
   }, [mounted, isAuthenticated, searchParams, router]);
 
@@ -161,7 +162,8 @@ export default function LoginPage() {
       }
 
       toast.success(t("auth.loginSuccess"));
-      // Redirect will be handled by useEffect when isAuthenticated updates
+      const returnUrl = searchParams.get("returnUrl");
+      router.replace(returnUrl || "/");
     } catch (error) {
       console.error("Login error:", error);
       toast.error(t("auth.loginError"));
@@ -307,6 +309,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type="password"
+                  autoComplete="current-password"
                   placeholder={t("auth.passwordPlaceholder")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
